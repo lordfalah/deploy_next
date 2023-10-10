@@ -22,7 +22,13 @@ const Tables = () => {
 
   const getItems = async () => {
     try {
-      const request = await fetch("/api/items", { cache: "no-cache" });
+      const request = await fetch("/api/items", {
+        cache: "no-cache",
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+        },
+      });
       const response = await request.json();
 
       const result = response?.data?.flatMap(({ products }) => products);
@@ -49,7 +55,7 @@ const Tables = () => {
   }, []);
 
   return (
-    <div className="w-full ">
+    <div className="w-full relative">
       <Dropdown
         datas={state}
         onCategory={onCategory}
@@ -62,16 +68,24 @@ const Tables = () => {
       ) : (
         <div>
           {products.length > 0 ? (
-            <div className="overflow-x-scroll md:overflow-hidden w-full h-auto ">
-              <table className="border-separate border border-slate-500 table-auto mx-auto">
+            <div className="overflow-x-scroll lg:overflow-hidden w-full h-auto">
+              <table className="border-separate border border-slate-500 table-auto mx-auto text-lg border-spacing-5">
                 <thead>
                   <tr>
-                    <th className="border border-slate-600">No</th>
-                    <th className="border border-slate-600">Name</th>
-                    <th className="border border-slate-600">Description</th>
-                    <th className="border border-slate-600">Price</th>
-                    <th className="border border-slate-600">Created</th>
-                    <th className="border border-slate-600">Modified</th>
+                    <th className="border border-slate-600 p-1 sm:p-2">No</th>
+                    <th className="border border-slate-600 p-1 sm:p-2">Name</th>
+                    <th className="border border-slate-600 p-1 sm:p-2">
+                      Description
+                    </th>
+                    <th className="border border-slate-600 p-1 sm:p-2">
+                      Price
+                    </th>
+                    <th className="border border-slate-600 p-1 sm:p-2">
+                      Created
+                    </th>
+                    <th className="border border-slate-600 p-1 sm:p-2">
+                      Modified
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -81,14 +95,24 @@ const Tables = () => {
                       idx
                     ) => (
                       <tr key={id}>
-                        <td className="border border-slate-700">{idx + 1}</td>
-                        <td className="border border-slate-700">{name}</td>
-                        <td className="border border-slate-700">
+                        <td className="border border-slate-700 p-1 sm:p-2 text-center">
+                          {idx + 1}
+                        </td>
+                        <td className="border border-slate-700 p-1 sm:p-2">
+                          {name}
+                        </td>
+                        <td className="border border-slate-700 p-1 sm:p-2">
                           {description}
                         </td>
-                        <td className="border border-slate-700">{price}</td>
-                        <td className="border border-slate-700">{created}</td>
-                        <td className="border border-slate-700">{modified}</td>
+                        <td className="border border-slate-700 p-1 sm:p-2">
+                          {price}
+                        </td>
+                        <td className="border border-slate-700 p-1 sm:p-2">
+                          {created}
+                        </td>
+                        <td className="border border-slate-700 p-1 sm:p-2">
+                          {modified}
+                        </td>
                       </tr>
                     )
                   )}
