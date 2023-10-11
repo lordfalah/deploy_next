@@ -67,7 +67,7 @@ const Tables = () => {
         <div className="text-white font-bold text-4xl">Loaddddd.......</div>
       ) : (
         <div>
-          {products.length > 0 ? (
+          {!state.isError && products?.length > 0 ? (
             <div className="overflow-x-scroll lg:overflow-hidden w-full h-auto">
               <table className="border-separate border border-slate-500 table-auto mx-auto text-lg border-spacing-5">
                 <thead>
